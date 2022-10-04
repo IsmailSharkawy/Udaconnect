@@ -1,0 +1,34 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: person-retriever
+  name: person-retriever
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: person-retriever
+  template:
+    metadata:
+      labels:
+        app: person-retriever
+    spec:
+      containers:
+        - image: limitles2v1/udaconnect-person-retriever:latest
+          name: person-retriever
+          imagePullPolicy: Always
+      restartPolicy: Always
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: person-retriever
+spec:
+  selector:
+    app: person-retriever
+  ports:
+    - protocol: TCP
+      port: 30005
+      targetPort: 30005

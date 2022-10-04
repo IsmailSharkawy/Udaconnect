@@ -1,0 +1,26 @@
+{
+  "swagger": "2.0",
+  "basePath": "/",
+  "paths":
+    {
+      "/api/send_loc":
+        {
+          "post":
+            {
+              "responses": { "200": { "description": "Success" } },
+              "operationId": "post_location_resource",
+              "tags": ["UdaConnect"],
+            },
+        },
+    },
+  "info": { "title": "UdaConnect API", "version": "0.1.0" },
+  "produces": ["application/json"],
+  "consumes": ["application/json"],
+  "tags":
+    [{ "name": "UdaConnect", "description": "Connections via geolocation." }],
+  "responses":
+    {
+      "ParseError": { "description": "When a mask can't be parsed" },
+      "MaskError": { "description": "When any error occurs on mask" },
+    },
+}

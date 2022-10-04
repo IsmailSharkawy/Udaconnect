@@ -1,0 +1,7 @@
+After having used the strangler pattern, connection and person have been divided into two 
+separate microservices,and while they're still making use of rest, I found that communication 
+between microservices within the same system is faster using gRPC than using rest, and since 
+connections depended on a person_map dict, I found that we could make use of gRPC to provide the 
+connection service with the retrieved person map using a proto Retrieve method. This resulted in the
+introduction of a new PersonRetriever gRPC client that's responsible for getting updated person table 
+content using rest and providing it to connection service (containing a gRPC getter) using gRPC.

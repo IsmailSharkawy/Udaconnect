@@ -1,0 +1,6 @@
+The reason Kafka was integrated as part of location coordinates collection step is because that 
+step is the one that generates the most consistent continous traffic and so will result in performance 
+decrease/user response delay as the service scales, the introduction of kafka ensures that the 
+coordinates collection process happens asynchronously so user doesn't wait for location to be commited to
+db and thus results in an overall smoother experience, gRPC was placed between person and connection to make 
+use of speed up allowed by properly implemented gRPC service between two microservices.
