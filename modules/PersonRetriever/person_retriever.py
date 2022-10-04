@@ -10,13 +10,13 @@ import logging
 
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
+rest_people = requests.get('http://10.43.80.52:5000/' + "api/persons").json()
+print(rest_people)
 
 def run():
     logger.warning(f"running")
     print('running')
-    rest_people = requests.get('http://10.43.80.52:5000/' + "api/persons").json()
     logger.warning(f"running", rest_people)
-    print(rest_people)
     # people_list = []
     class PersonServicer(person_pb2_grpc.PersonRequestServicer):
         def Retrieve(self, request, context):
