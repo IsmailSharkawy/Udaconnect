@@ -8,33 +8,32 @@ import person_pb2_grpc
 import requests
 import logging 
 
-logging.basicConfig(level=logging.WARNING)
+logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger("udaconnect-api")
-rest_people = requests.get('http://10.43.80.52:5000/' + "api/persons").json()
-print(rest_people)
 
+class PersonServicer(person_pb2_grpc.PersonRequestServicer):
+    def Retrieve(self, request, context):
+        rest_people = requests.get('http://10.43.80.52:5000/' + "api/persons").json()
+        logging.info('len of people',len(rest_people))
+        for person in rest_people:
+            response = person_pb2.Person(
+                id=person['id'],
+                first_name=person['first_name'],
+                last_name=person['last_name'],
+                company_name=person['company_name'],
+            )
+            yield response
 def run():
-    logger.warning(f"running")
+    logger.info(f"running")
     print('running')
-    logger.warning(f"running", rest_people)
     # people_list = []
-    class PersonServicer(person_pb2_grpc.PersonRequestServicer):
-        def Retrieve(self, request, context):
-            for person in rest_people:
-                response = person_pb2.Person(
-                    id=person['id'],
-                    first_name=person['first_name'],
-                    last_name=person['last_name'],
-                    company_name=person['company_name'],
-                )
-                yield response
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=2))
     person_pb2_grpc.add_PersonRequestServicer_to_server(PersonServicer(), server)
 
 
-    logger.warning("Server starting on port 30005...")
     server.add_insecure_port("[::]:30005")
     server.start()
+    logger.info("Server starting on port 30005...")
 
 
     # Keep thread alive

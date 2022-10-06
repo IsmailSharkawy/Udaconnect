@@ -21,7 +21,7 @@ Sample implementation of a writer that can be used to write messages to gRPC.
 logging.basicConfig(level=logging.WARNING)
 logger = logging.getLogger("udaconnect-api")
 
-channel = grpc.insecure_channel("10.43.244.12:30005")
+channel = grpc.insecure_channel("10.43.89.213:30005")
 logger.warning("channel",channel)
 
 class ConnectionService:
